@@ -1,30 +1,10 @@
 <?php
 
-class Movie
-{
-    public $title;
-    public $year;
-    public $director;
+require_once "./Models/Genre.php";
+require_once "./Models/Movie.php";
 
-    public function __construct($_title, $_genre, $_year, $_director)
-    {
-        $this->title = $_title;
-        $this->genre = $_genre;
-        $this->year = $_year;
-        $this->director = $_director;
-    }
 
-    public function setYear($year)
-    {
-        if ($year >= 1900) {
-            $this->year = $year;
-        } else {
-            echo "Invalid Year";
-        }
-    }
-}
-
-$movie = new Movie("Batman", "Action", 2022, "Matt Reeves");
+$movie = new Movie("Batman", 2022, "Matt Reeves", new Genre("Action"));
 
 
 $movie->setYear(2010);
@@ -56,6 +36,7 @@ var_dump($movie);
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $movie->title; ?></h5>
                         <p class="card-text">Year: <?php echo $movie->year; ?></p>
+                        <p class="card-text">Genre: <?php echo $movie->genre->name; ?></p>
                         <p class="card-text">Director: <?php echo $movie->director; ?></p>
                     </div>
                 </div>
