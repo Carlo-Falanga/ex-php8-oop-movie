@@ -4,17 +4,14 @@ require_once "./Models/Genre.php";
 require_once "./Models/Movie.php";
 
 
-$movie = new Movie("Batman", 2022, "Matt Reeves", new Genre("Action"));
-
-
-$movie->setYear(2010);
-
-var_dump($movie);
-
+$movies = [
+    new Movie("Batman", 2022, "Matt Reeves", new Genre("Action"), new Genre("Thriller")),
+    new Movie("Inception", 2010, "Christopher Nolan", new Genre("Sci-Fi"), new Genre("Action")),
+    new Movie("Parasite", 2019, "Bong Joon-ho", new Genre("Drama"), new Genre("Thriller")),
+    new Movie("Spirited Away", 2001, "Hayao Miyazaki", new Genre("Animation"), new Genre("Fantasy")),
+];
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,16 +28,23 @@ var_dump($movie);
     <div class="container">
         <h1>Movies</h1>
         <div class="row row-cols-1 row-cols-md-2">
-            <div class="col mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $movie->title; ?></h5>
-                        <p class="card-text">Year: <?php echo $movie->year; ?></p>
-                        <p class="card-text">Genre: <?php echo $movie->genre->name; ?></p>
-                        <p class="card-text">Director: <?php echo $movie->director; ?></p>
+            <?php foreach ($movies as $movie) : ?>
+                <div class="col mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $movie->title; ?></h5>
+                            <p class="card-text">Year: <?php echo $movie->year; ?></p>
+                            <p class="card-text">Genre:
+                                <?php
+                                $genreNames = array_map(fn($genre) => $genre->name, $movie->genres);
+                                echo implode(", ", $genreNames);
+                                ?>
+                            </p>
+                            <p class="card-text">Director: <?php echo $movie->director; ?></p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </body>
