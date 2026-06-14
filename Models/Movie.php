@@ -1,6 +1,7 @@
 <?php
 
     require_once "./Traits/Validatable.php";
+    require_once "./Models/Genre.php";
 
 class Movie {
 
@@ -11,17 +12,17 @@ class Movie {
     public $director;
     public $genres;
 
-    public function __construct($_title, $_year, $_director, Genre ...$names)
+    public function __construct($_title, $_year, $_director, Genre ...$genres)
     {
-        $this->title = $_title;
-        $this->year = $_year;
-        $this->director = $_director;
-        $this->genres = $names;
+        $this->title = $this->validateNotEmpty($_title) ? $_title : "Senza titolo";
+        $this->setYear($_year);
+        $this->director = $this->validateNotEmpty($_director) ? $_director : "Sconosciuto";
+        $this->genres = $genres;
     }
 
     public function setYear($year)
     {
-        if ($year >= 1900) {
+        if ($this->validateYear($year)) {
             $this->year = $year;
         } else {
             echo "Invalid Year";
